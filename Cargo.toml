@@ -1,5 +1,5 @@
 [package]
-name = "ssap"
+name = "vec_ssap"
 version = "0.1.0"
 authors = ["triandco"]
 license = "Apache-2.0"
