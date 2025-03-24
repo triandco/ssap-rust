@@ -34,13 +34,13 @@ impl NormalisedVector{
 }
 
 #[derive(Clone)]
-pub struct HashKey{
+pub struct EncryptionKey{
     pertubation_direction: NormalisedVector,
     scale_factor: f32,
     beta: f32
 }
 
-impl HashKey{
+impl EncryptionKey{
     pub fn new(dimension: usize, beta: f32, scale_factor: f32) -> Self {
         Self {
             beta,
@@ -50,7 +50,7 @@ impl HashKey{
     }
 }
 
-pub fn hash(key: &HashKey, value: Vec<f32>) -> Vec<f32> {
+pub fn encrypt(key: &EncryptionKey, value: Vec<f32>) -> Vec<f32> {
     let rand_factor: f32 = rand::rng().random_range(0.0..1.0);
     let pertubation_scale = key.beta / 4.0 * rand_factor.powf(1.0 / value.len() as f32);
     let pertubation = multiply(key.pertubation_direction.value.clone(), pertubation_scale);
@@ -98,10 +98,10 @@ mod test{
         let beta = delta.abs();
         assert!(beta > 0.0);
 
-        let seed = HashKey::new(dimension, beta, 2.0);
-        let fx = hash(&seed, x.clone());
-        let fy = hash(&seed, y.clone());
-        let fz = hash(&seed, z.clone());
+        let seed = EncryptionKey::new(dimension, beta, 2.0);
+        let fx = encrypt(&seed, x.clone());
+        let fy = encrypt(&seed, y.clone());
+        let fz = encrypt(&seed, z.clone());
 
         let dist_fxy = dot_distance(&fx, &fy);
         let dist_fxz = dot_distance(&fx, &fz);
