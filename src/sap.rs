@@ -1,6 +1,6 @@
 // implementation of SAP scheme as described in
 // [Approximate Distance-Comparison-Preserving Symmetric Encryption](https://eprint.iacr.org/2021/1666.pdf)
-use rand::{rng, Rng};
+use rand::{Rng, rng};
 use rand_distr::{Distribution, Normal, Uniform};
 use std::collections::HashMap;
 
@@ -122,7 +122,7 @@ impl UniformDistributionStatefulPRF {
             None => {
                 let uniform = Uniform::new(min, max).unwrap();
                 let mut rng = rng();
-                let value =  uniform.sample(&mut rng);
+                let value = uniform.sample(&mut rng);
                 self.state.insert(key, value);
                 value
             }
@@ -182,7 +182,7 @@ impl SAP {
         let coins_1 = self
             .binary_string_prf
             .generate(seed.seed_key.clone(), seed.seed_key.len());
-        
+
         let coins_2 = self.binary_string_prf.generate(n.clone(), n.len());
 
         let u = self.mvn_vec_prf.generate(dimension_count, coins_1);
@@ -218,10 +218,7 @@ impl SAP {
             * seed.scale_factor
             * self.beta
             / 4.0;
-        let lambda_m = crate::math::multiply(
-            crate::math::normalise(u),
-            x
-        );
+        let lambda_m = crate::math::multiply(crate::math::normalise(u), x);
         let m = crate::math::multiply(
             crate::math::minus(encrypted_value.value, lambda_m),
             1.0 / seed.scale_factor,
@@ -234,17 +231,14 @@ impl SAP {
 mod test {
     use super::*;
     use rayon::iter::{IndexedParallelIterator, IntoParallelRefIterator, ParallelIterator};
-    
+
     fn dot_distance(a: &Vec<f32>, b: &Vec<f32>) -> f32 {
         assert_eq!(
             a.len(),
             b.len(),
             "Can't calculate the 2d norm if the number of a and b components doesn't match"
         );
-        a.par_iter()
-            .zip(b.par_iter())
-            .map(|(a, b)| (a * b))
-            .sum()
+        a.par_iter().zip(b.par_iter()).map(|(a, b)| (a * b)).sum()
     }
 
     fn create_random_vector(length: usize) -> Vec<f32> {
@@ -282,7 +276,7 @@ mod test {
     }
 
     #[test]
-    /// Beta preserve distance comparison property is defined as 
+    /// Beta preserve distance comparison property is defined as
     /// dist(x,y) < dist(x,z) - beta => dist(encrypt(x), encrypt(y)) < dist(encrypted(x), encrypted(z))
     pub fn beta_preserve_distance() {
         let x = create_random_vector(4);
