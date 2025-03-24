@@ -2,12 +2,12 @@
 name = "ssap"
 version = "0.1.0"
 authors = ["triandco"]
-license = "MIT OR Apache-2.0"
+license = "Apache-2.0"
 readme = "README.md"
 repository = "https://github.com/triandco/ssap-rust"
 homepage = "https://rust-random.github.io/book"
 description = """
-State Scale and Perturbation scheme for vector encryption
+Stateless Scale and Perturbation scheme for vector encryption
 """
 keywords = ["vector", "encryption", "sap", "distance-comparison preserving"]
 categories = ["algorithms"]
