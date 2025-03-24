@@ -9,7 +9,7 @@ homepage = "https://rust-random.github.io/book"
 description = """
 Stateless Scale and Perturbation scheme for vector encryption
 """
-keywords = ["vector", "encryption", "sap", "distance comparison", "ssap", "triandco", "stateless"]
+keywords = ["vector", "encryption", "sap", "distance comparison", "ssap"]
 categories = ["algorithms"]
 autobenches = true
 edition = "2024"
