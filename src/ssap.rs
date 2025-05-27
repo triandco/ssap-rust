@@ -1,12 +1,13 @@
 use crate::math::{multiply, sum};
 use rand::Rng;
 use rand_distr::{Distribution, Normal};
+use serde::{Deserialize, Serialize};
 
 /// SAP vector hash is based on the encryption method of SAP scheme
 /// described in Approximate-Distance-Comparision Preserving Symmetric Encryption
 /// to produced a hashed vector using a pertubation and a scale factor
 /// in a way that preserve its approximate-distance-comparision property
-#[derive(Clone)]
+#[derive(Clone, Serialize, Deserialize)]
 pub struct NormalisedVector {
     pub value: Vec<f32>,
 }
@@ -32,7 +33,7 @@ impl NormalisedVector {
     }
 }
 
-#[derive(Clone)]
+#[derive(Clone, Serialize, Deserialize)]
 pub struct EncryptionKey {
     pertubation_direction: NormalisedVector,
     scale_factor: f32,
